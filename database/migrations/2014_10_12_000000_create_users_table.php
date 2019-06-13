@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->nullable(false);
             $table->string('email')->unique()->nullable(false);
             $table->string('password')->nullable(false);
-            $table->string('rol')->default(User::$USER_LOGGED);
             $table->boolean('state')->default(true);
             $table->timestamps();
         });
