@@ -49,10 +49,8 @@ class Utils
         $table->softDeletes();
         $table->bigInteger($foreingId)->unsigned()->nullable(false);
         $table->bigInteger('country_id')->unsigned()->nullable(false);
-        $table->foreign($foreingId)->on($tableRef)->references($tableRefId)
-            ->onUpdate('CASCADE')
-            ->onDelete('CASCADE');
-        $table->foreign('country_id')->on('languages')->references('id');
+        $table->foreign($foreingId)->on($tableRef)->references($tableRefId);
+        $table->foreign('country_id')->on('countries')->references('id');
     }
 
     public static function getCustomTableRelation(Blueprint $table, string $tableRef, string $tableRefId,string $foreignId) {
