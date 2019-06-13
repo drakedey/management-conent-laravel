@@ -28,8 +28,8 @@ class CreateDivisionsTable extends Migration
 
         Schema::create('country_division', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('division_id')->nullable(false);
-            $table->bigInteger('country_id')->nullable(false);
+            Utils::getCustomTableRelation($table, 'countries', 'id', 'country_id');
+            Utils::getCustomTableRelation($table, 'divisions', 'id', 'division_id');
             $table->timestamps();
             $table->softDeletes();
         });

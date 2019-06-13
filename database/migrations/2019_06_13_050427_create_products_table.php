@@ -36,6 +36,17 @@ class CreateProductsTable extends Migration
             $table->string('description');
             Utils::getContentTableRelations($table, 'products', 'id', 'product_id' );
         });
+
+        Schema::create('country_product', function (Blueprint $table) {
+            Utils::getManyToManyCountryRelation($table, 'product_id', 'products', 'id' );
+        });
+
+        Schema::create('division_product', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id' );
+            Utils::getCustomTableRelation($table, 'divisions', 'id', 'division_id' );
+
+        });
     }
 
     /**

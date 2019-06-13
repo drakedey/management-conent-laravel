@@ -16,10 +16,10 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
             $table->string('name')->nullable(false);
             $table->string('uri_param')->nullable(false)->unique();
             Utils::getUserRelation($table);
+            $table->timestamps();
             $table->softDeletes();
         });
     }
