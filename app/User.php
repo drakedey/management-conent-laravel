@@ -47,4 +47,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Rol');
     }
 
+    public function languages(){
+        return $this->hasMany('App\Language');
+    }
+
 }

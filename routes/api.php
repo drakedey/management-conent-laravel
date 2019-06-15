@@ -29,13 +29,4 @@ Route::prefix('user')->group(function(){
     Route::get('all', 'User\UserController@getAllUsers');
 });
 
-Route::prefix('country')->group(function(){
-    Route::get('all', 'Country\CountryController@getAllCountries');
-
-
-
-
-
-
-});
-
+Route::resource('languages', 'LanguageController')->only(['index', 'show', 'store', 'update', 'destroy']);
