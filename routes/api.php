@@ -28,3 +28,5 @@ Route::prefix('user')->group(function(){
     Route::put('delete/{id}', 'User\UserController@softDeleteUser');
     Route::get('all', 'User\UserController@getAllUsers');
 });
+
+Route::resource('languages', 'LanguageController')->only(['index', 'show', 'store', 'update', 'destroy']);

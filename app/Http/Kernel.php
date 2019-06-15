@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckType;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Passport\Passport;
 
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
+        'client.admincredentials' => CheckType::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
