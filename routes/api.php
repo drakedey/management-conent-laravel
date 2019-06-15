@@ -28,3 +28,14 @@ Route::prefix('user')->group(function(){
     Route::put('delete/{id}', 'User\UserController@softDeleteUser');
     Route::get('all', 'User\UserController@getAllUsers');
 });
+
+Route::prefix('country')->group(function(){
+    Route::get('all', 'Country\CountryController@getAllCountries');
+
+
+
+
+
+
+});
+
