@@ -23,5 +23,8 @@ Route::prefix('user')->group(function(){
     Route::post('register', 'User\UserController@register');
     Route::get('info', 'User\UserController@getUserData');
     Route::post('logout', 'User\UserController@logout');
-    Route::put('update', 'User\UserController@update');
+    Route::put('update/{id}', 'User\UserController@updateUserInfo');
+    Route::post('updatePassword/{id}', 'User\UserController@updateUserPassword');
+    Route::put('delete/{id}', 'User\UserController@softDeleteUser');
+    Route::get('all', 'User\UserController@getAllUsers');
 });
