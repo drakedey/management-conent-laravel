@@ -30,3 +30,4 @@ Route::prefix('user')->group(function(){
 });
 
 Route::resource('languages', 'LanguageController')->only(['index', 'show', 'store', 'update', 'destroy']);
+Route::resource('product-type', 'ProductTypeController')->only(['index', 'show', 'store', 'update', 'destroy']);
