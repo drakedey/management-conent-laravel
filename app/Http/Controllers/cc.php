@@ -9,11 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Rol;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class cc extends Controller
 {
 
     /**
-     * CountryController constructor.
+     * cc constructor.
      */
     public function __construct()
     {
@@ -21,8 +21,14 @@ class CountryController extends Controller
     }
 
     public function getAllCountries (Request $request) {
+
+    }
+
+
+    public function getCountry (Request $request, int $id) {
         if ($request->user()->rol->name == Rol::ADMIN) {
-            return \response()->json(['countries' => Country::all()], 200);
+            $country = Country::query()->find($id);
+            return \response()->json(['country' => $country], 200);
         }
         return \response(['error' => 'Unhautorized'], 401);
     }

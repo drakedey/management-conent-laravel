@@ -17,4 +17,11 @@ class Language extends Model
     public function User() {
         $this->belongsTo('App\User');
     }
+
+
+
+
+    public function tagContent() {
+        $this->belongsTo('App\TagContent');
+    }
 }

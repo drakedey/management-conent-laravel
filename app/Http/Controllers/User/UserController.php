@@ -82,6 +82,11 @@ class UserController extends Controller
         if($validator->fails()) {
             return \response()->json(['error' => $validator->errors()], 400);
         }
+
+        if (!$user->isDirty()) {
+            return response()->json(['error' => 'You must specify at least one different value to update', 'code' => 422], 422);
+        }
+
         $user->update($input);
 
         return \response()->json([
