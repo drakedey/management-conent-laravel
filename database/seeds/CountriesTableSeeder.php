@@ -17,6 +17,28 @@ class CountriesTableSeeder extends Seeder
 
         Country::query()->truncate();
 
-        factory(Country::class, 3)->create();
+        DB::table('countries')->insert([
+            'name' => 'chile',
+            'uri_param' => 'cl',
+            'user_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('countries')->insert([
+            'name' => 'peru',
+            'uri_param' => 'pe',
+            'user_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('countries')->insert([
+            'name' => 'paraguay',
+            'uri_param' => 'pl',
+            'user_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

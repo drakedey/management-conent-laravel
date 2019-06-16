@@ -38,27 +38,25 @@ class TagController extends Controller
         $rules = [
             'name' => 'required|unique:tags_content',
             'user_id' => 'required',
-//            'tag_id' => 'required',
-//            'language_id' => 'required'
         ];
 
+        // Validating object
         $data = $request->all();
-
         $validator = Validator::make($data, $rules);
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
+
         if ($request->user()->rol->name == Rol::ADMIN) {
             $tag = new Tag($request->all());
             $tag->save();
-            $tag_content = new Tag_Content();
+            $tag_content = new TagContent();
             $tag_content->name = $request->name;
             $tag_content->tag_id = $tag->id;
             $tag_content->language_id = $request->languaje_id;
             $tag_content->save();
 
-            return response()->json(['tag' => $tag, 'tag_content' => $tag_content], 200);
+            return response()->json(['tag' => $tag], 200);
         }
         return response()->json(['error' => 'Unhautorized'], 401);
 
@@ -102,7 +100,7 @@ class TagController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $content = $data['tag_content'];
+        $content = $data['name'];
 
 
         if ($request->has('name')) {
