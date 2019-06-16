@@ -47,7 +47,7 @@ class UserController extends Controller
     }
 
     public function getUserData(Request $request) {
-        return \response()->json(['user' => $request->user()->toArray()], 200);
+        return \response()->json(['user' => $request->user()], 200);
     }
 
     public function logout(Request $request) {

@@ -10,12 +10,18 @@ class Language extends Model
 
     use SoftDeletes;
 
+    public const SPANISH = "spanish";
+
     protected $fillable = [
         'name', 'user_id'
     ];
 
     public function User() {
-        $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
+    }
+
+    public function productTypes() {
+        return $this->hasMany('App\ProducTypeLanguages');
     }
 
 
