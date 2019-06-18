@@ -1,6 +1,7 @@
 <?php
-
+use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,6 +12,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\User::class, 10)->create();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+        User::query()->truncate();
+
+        factory(User::class, 10)->create();
     }
 }

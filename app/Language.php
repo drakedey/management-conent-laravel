@@ -23,4 +23,11 @@ class Language extends Model
     public function productTypes() {
         return $this->hasMany('App\ProducTypeLanguages');
     }
+
+
+
+
+    public function tagContent() {
+        $this->belongsTo('App\TagContent');
+    }
 }
