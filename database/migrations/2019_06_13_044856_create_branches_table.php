@@ -23,8 +23,8 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('type')->nullable(false);
-            $table->string('url')->nullable(false);
+//            $table->string('type')->nullable(false);
+//            $table->string('url')->nullable(false);
             $table->timestamps();
             Utils::getUserRelation($table);
             Utils::getCustomTableRelation($table, 'branch_types', 'id', 'branch_type_id');
