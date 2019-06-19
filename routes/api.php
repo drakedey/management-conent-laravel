@@ -34,3 +34,9 @@ Route::resource('product-type', 'ProductTypeController')->only(['index', 'show',
 Route::resource('countries', 'CountryController')->only(['index', 'show', 'store', 'update', 'destroy']);
 Route::resource('tags', 'TagController')->only(['index', 'show', 'store', 'update', 'destroy']);
 Route::resource('branch-type', 'BranchTypeController')->only(['index', 'show', 'store', 'update', 'destroy']);
+Route::resource('branch', 'BranchController')->only(['index', 'show', 'store', 'destroy']);
+
+Route::prefix('branch')->group(function () {
+    Route::post('update/{id}', 'BranchController@update');
+    Route::get('branch-type/{typeId}', 'BranchController@getByTypeId');
+});

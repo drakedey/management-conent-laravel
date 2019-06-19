@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     protected $fillable = [
-        'type', 'url', 'product_id', 'branch_id', 'new_id'
+        'type', 'url', 'product_id', 'branch_id', 'new_id', 'name'
     ];
 
     public function branch() {
