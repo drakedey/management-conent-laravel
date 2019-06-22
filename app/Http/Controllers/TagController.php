@@ -11,6 +11,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @OA\Info(title="API Vespek", version="1.0")
+ *
+ * @OA\Server(url="http://127.0.0.1:8000")
+ */
+
 class TagController extends Controller
 {
 
@@ -22,9 +28,18 @@ class TagController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return void
+     * @OA\Get(
+     *     path="/tags",
+     *     summary="Mostrar Tags",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar todos los tags."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function index(Request $request)
     {
@@ -118,6 +133,7 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         $tag = Tag::query()->findOrFail($id);
+        $tag_content = TagContent::query()->find($request->tag_id);
 
         $rules = [
           'content' => 'required',
@@ -125,7 +141,6 @@ class TagController extends Controller
 
 
         $data = $request->all();
-
         $validator = Validator::make($data,$rules);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);

@@ -1,0 +1,28 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Vespek",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/tags": {
+            "get": {
+                "summary": "Mostrar Tags",
+                "operationId": "App\\Http\\Controllers\\TagController::index",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar todos los tags."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        }
+    }
+}
