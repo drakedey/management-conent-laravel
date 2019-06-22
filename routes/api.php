@@ -40,3 +40,8 @@ Route::prefix('branch')->group(function () {
     Route::post('update/{id}', 'BranchController@update');
     Route::get('branch-type/{typeId}', 'BranchController@getByTypeId');
 });
+
+Route::resource('agreements', 'AgreementController')->only(['index', 'show', 'store', 'update', 'destroy']);
+Route::prefix('agreements')->group(function () {
+   Route::get('person-contact-id/{contactId}', 'AgreementController@getByContactId');
+});
