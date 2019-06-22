@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Language;
 use App\Rol;
 use App\Tag;
 use App\TagContent;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        $this->middleware('client.admincredentials');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -34,10 +43,8 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
-            'name' => 'required|unique:tags_content',
-            'user_id' => 'required',
+            'content' => 'required'
         ];
 
         // Validating object
@@ -47,18 +54,45 @@ class TagController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        if ($request->user()->rol->name == Rol::ADMIN) {
-            $tag = new Tag($request->all());
-            $tag->save();
-            $tag_content = new TagContent();
-            $tag_content->name = $request->name;
-            $tag_content->tag_id = $tag->id;
-            $tag_content->language_id = $request->languaje_id;
-            $tag_content->save();
-
-            return response()->json(['tag' => $tag], 200);
+        //Validating that at content there's the spanish body (the minimun required)
+        $content = $data['content'];
+        $contentRules = [Language::SPANISH => 'required'];
+        $contentValidator = Validator::make($content, $contentRules);
+        if($contentValidator->fails()) {
+            return response(['error' => $validator->errors()], 400);
         }
-        return response()->json(['error' => 'Unhautorized'], 401);
+
+
+        //Validating that the language exists on DB and the content is not empty and accomplish with the minimun data
+        foreach ($content as $language => $language_content) {
+            //Validating thar exists in other case returns 400
+            Language::query()->where('name', '=', $language)->firstOrFail();
+            $rules = [
+                'name' => 'required',
+            ];
+            //Spanish is mandatory, if language content is not empty the validate
+            if($language == Language::SPANISH || !empty($language_content)) {
+                $innerContentValidator = Validator::make($language_content, $rules);
+                if($innerContentValidator->fails()) {
+                    return response(['error' => $innerContentValidator->errors()], 400);
+                }
+            }
+        }
+
+        //Creating
+        $tag = Tag::create(['user_id' => $request->user()->id]);
+        foreach ($content as $language => $language_content) {
+            $languageRegister = Language::where('name', '=', $language)->firstOrFail();
+            $tagContent = [
+                'name' => $language_content['name'],
+                'tag_id' => $tag->id,
+                'language_id' => $languageRegister->id
+            ];
+            TagContent::create($tagContent);
+        }
+
+        return response()->json(['tag' => $tag], 200);
+
 
     }
 
@@ -68,13 +102,10 @@ class TagController extends Controller
      * @param int $id
      * @return void
      */
-    public function show(Request $request, $id)
+    public function show(int $id)
     {
-        if ($request->user()->rol->name == Rol::ADMIN) {
-            $tag = Tag::query()->find($id);
-            return response()->json(['tag' => $tag->toArray()], 200);
-        }
-        return response()->json(['error' => 'Unhautorized'], 401);
+        $tag = Tag::findOrFail($id);
+        return \response(['tag' => $tag], 200);
     }
 
     /**
@@ -89,7 +120,7 @@ class TagController extends Controller
         $tag = Tag::query()->findOrFail($id);
 
         $rules = [
-          'name' => 'unique:tags_content',
+          'content' => 'required',
         ];
 
 
@@ -100,30 +131,49 @@ class TagController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $content = $data['name'];
-
-
-        if ($request->has('name')) {
-            $content->name = $content['name'];
+        $content = $data['content'];
+        //Validating that the language exists on DB and the content is not empty and accomplish with the minimun data
+        foreach ($content as $language => $language_content) {
+            //Validating thar exists in other case returns 404
+            Language::where('name', '=', $language)->firstOrFail();
+            $rules = [
+                'name' => 'required',
+            ];
+            $innerContentValidator = Validator::make($language_content, $rules);
+            if($innerContentValidator->fails()) {
+                return response(['error' => $innerContentValidator->errors()], 400);
+            }
         }
 
-        if (!$tag->isDirty()) {
-            return response()->json(['error' => 'You must specify at least one different value to update', 'code' => 422], 422);
+        foreach ($content as $language => $language_content) {
+            $languageTarget = Language::where('name', '=', $language)->first();
+            $contentTarget = TagContent::where('tag_id', '=', $tag->id)->where('language_id','=', $languageTarget->id)->first();
+            $tagContentLanguage = [
+                'name' => $language_content['name'],
+            ];
+            if($contentTarget) {
+                $contentTarget->update($tagContentLanguage);
+            } else {
+                $tagContentLanguage['tag_id'] = $tag->id;
+                $tagContentLanguage['language_id'] = $languageTarget->id;
+                TagContent::create($tagContentLanguage);
+            }
         }
 
-        $tag->save();
-
-        return response()->json(['success' => 'country updated succesfully', 'country' => $tag], 200);
+        return response()->json(['success' => 'tag updated succesfully', 'tag' => $tag], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return void
+     * @return \http\Env\Response response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::query()->findOrFail($id);
+        $tag->delete();
+        return \response(['success' => 'tag deleted', 'tag' => $tag], 200);
     }
 }
