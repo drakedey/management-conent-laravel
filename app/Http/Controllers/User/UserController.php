@@ -49,6 +49,10 @@ class UserController extends Controller
     public function getUserData(int $id) {
         $user = User::query()->find($id);
 
+        if($user == null) {
+            return \response()->json(['error' => 'user not found'], 400);
+        }
+
         return \response()->json(['user' => $user], 200);
     }
 
