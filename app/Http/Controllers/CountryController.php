@@ -45,7 +45,7 @@ class CountryController extends Controller
     {
         $rules = [
             'name' => 'required|unique:countries',
-            'uri_param' => 'required',
+            'uri_param' => 'required|unique:countries',
             'user_id' => 'required'
         ];
 
