@@ -21,4 +21,8 @@ class Country extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function divisions() {
+        return $this->belongsToMany('App\Division');
+    }
+
 }

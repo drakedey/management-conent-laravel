@@ -20,14 +20,16 @@ class Language extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function productTypes() {
-        return $this->hasMany('App\ProducTypeLanguages');
+    public function productType() {
+        return $this->hasOne('App\ProducTypeLanguages');
     }
 
 
-
+    public function divisionContent() {
+        return $this->hasOne('App\DivisionContent');
+    }
 
     public function tagContent() {
-        $this->belongsTo('App\TagContent');
+        $this->hasOne('App\TagContent');
     }
 }

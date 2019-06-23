@@ -43,5 +43,7 @@ Route::prefix('branch')->group(function () {
 
 Route::resource('agreements', 'AgreementController')->only(['index', 'show', 'store', 'update', 'destroy']);
 Route::prefix('agreements')->group(function () {
-   Route::get('person-contact-id/{contactId}', 'AgreementController@getByContactId');
+   Route::get('person-contact/{contactId}', 'AgreementController@getByContactId');
 });
+
+Route::resource('divisions', 'DivisionController')->only(['index', 'show', 'store', 'update', 'destroy']);

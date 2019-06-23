@@ -74,7 +74,7 @@ class TagController extends Controller
         $contentRules = [Language::SPANISH => 'required'];
         $contentValidator = Validator::make($content, $contentRules);
         if($contentValidator->fails()) {
-            return response(['error' => $validator->errors()], 400);
+            return response(['error' => $contentValidator->errors()], 400);
         }
 
 
@@ -133,7 +133,6 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         $tag = Tag::query()->findOrFail($id);
-        $tag_content = TagContent::query()->find($request->tag_id);
 
         $rules = [
           'content' => 'required',
