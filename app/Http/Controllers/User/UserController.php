@@ -46,8 +46,10 @@ class UserController extends Controller
         return response()->json(['success'=>$success], 200);
     }
 
-    public function getUserData(Request $request) {
-        return \response()->json(['user' => $request->user()], 200);
+    public function getUserData(int $id) {
+        $user = User::query()->find($id);
+
+        return \response()->json(['user' => $user], 200);
     }
 
     public function logout(Request $request) {

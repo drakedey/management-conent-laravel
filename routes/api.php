@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->group(function(){
     Route::post('register', 'User\UserController@register');
-    Route::get('info', 'User\UserController@getUserData');
+    Route::get('info/{id}', 'User\UserController@getUserData');
     Route::post('logout', 'User\UserController@logout');
     Route::put('update/{id}', 'User\UserController@updateUserInfo');
     Route::post('updatePassword/{id}', 'User\UserController@updateUserPassword');
