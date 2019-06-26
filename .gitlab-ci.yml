@@ -1,5 +1,8 @@
 heroku:
- stage: deploy
+ stages:
+  - build
+  - test
+  - deploy
  only:
  - master
  script:
