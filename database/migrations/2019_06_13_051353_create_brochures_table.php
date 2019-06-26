@@ -19,7 +19,7 @@ class CreateBrochuresTable extends Migration
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
-            \App\Libraries\Schema\Utils::getCustomTableRelation($table, 'products', 'id', 'product_id');
+            \App\Libraries\Schema\Utils::getCustomTableRelation($table, 'products', 'id', 'product_id', null);
         });
     }
 

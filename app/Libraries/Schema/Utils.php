@@ -54,7 +54,7 @@ class Utils
     }
 
     public static function getCustomTableRelation(Blueprint $table, string $tableRef, string $tableRefId,string $foreignId, $optional) {
-        $nullable = isset($optional['nullable']) ? true : false;
+        $nullable = $optional == null ? false : true;
         $table->bigInteger($foreignId)->unsigned()->nullable($nullable);
         $table->foreign($foreignId)->on($tableRef)->references($tableRefId);
     }

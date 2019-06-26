@@ -25,10 +25,10 @@ class CreateProductsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             Utils::getUserRelation($table);
-            Utils::getCustomTableRelation($table, 'branches', 'id', 'branch_id' );
-            Utils::getCustomTableRelation($table, 'categories', 'id', 'category_id' );
-            Utils::getCustomTableRelation($table, 'types', 'id', 'type_id' );
-            Utils::getCustomTableRelation($table, 'agreements', 'id', 'agreement_id' );
+            Utils::getCustomTableRelation($table, 'branches', 'id', 'branch_id', null );
+            Utils::getCustomTableRelation($table, 'categories', 'id', 'category_id', null );
+            Utils::getCustomTableRelation($table, 'types', 'id', 'type_id', null );
+            Utils::getCustomTableRelation($table, 'agreements', 'id', 'agreement_id', null );
         });
 
         Schema::create('products_content', function (Blueprint $table) {
@@ -43,8 +43,8 @@ class CreateProductsTable extends Migration
 
         Schema::create('division_product', function (Blueprint $table) {
             $table->bigIncrements('id');
-            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id' );
-            Utils::getCustomTableRelation($table, 'divisions', 'id', 'division_id' );
+            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id', null );
+            Utils::getCustomTableRelation($table, 'divisions', 'id', 'division_id', null );
 
         });
     }

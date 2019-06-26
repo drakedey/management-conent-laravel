@@ -30,8 +30,8 @@ class CreateRolesPermisionTable extends Migration
 
         Schema::create('module_rol', function(Blueprint $table) {
             $table->bigIncrements('id');
-            Utils::getCustomTableRelation($table, 'roles', 'id', 'rol_id');
-            Utils::getCustomTableRelation($table, 'modules', 'id', 'module_id');
+            Utils::getCustomTableRelation($table, 'roles', 'id', 'rol_id', null);
+            Utils::getCustomTableRelation($table, 'modules', 'id', 'module_id', null);
             $table->boolean('create')->default(false);
             $table->boolean('read')->default(false);
             $table->boolean('update')->default(false);
@@ -42,7 +42,7 @@ class CreateRolesPermisionTable extends Migration
             if(Schema::hasColumn('users', 'rol')) {
                 $table->dropColumn('rol');
             }
-            Utils::getCustomTableRelation($table, 'roles', 'id', 'rol_id');
+            Utils::getCustomTableRelation($table, 'roles', 'id', 'rol_id', null);
         });
     }
 

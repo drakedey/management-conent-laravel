@@ -16,16 +16,16 @@ class CreateProductsNewsTagsTable extends Migration
     {
         Schema::create('product_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id');
-            Utils::getCustomTableRelation($table, 'tags', 'id', 'tag_id');
+            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id', null);
+            Utils::getCustomTableRelation($table, 'tags', 'id', 'tag_id', null);
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('new_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            Utils::getCustomTableRelation($table, 'news', 'id', 'new_id');
-            Utils::getCustomTableRelation($table, 'tags', 'id', 'tag_id');
+            Utils::getCustomTableRelation($table, 'news', 'id', 'new_id', null);
+            Utils::getCustomTableRelation($table, 'tags', 'id', 'tag_id', null);
             $table->timestamps();
             $table->softDeletes();
         });

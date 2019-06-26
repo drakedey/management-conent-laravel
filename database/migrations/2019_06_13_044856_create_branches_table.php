@@ -27,7 +27,7 @@ class CreateBranchesTable extends Migration
 //            $table->string('url')->nullable(false);
             $table->timestamps();
             Utils::getUserRelation($table);
-            Utils::getCustomTableRelation($table, 'branch_types', 'id', 'branch_type_id');
+            Utils::getCustomTableRelation($table, 'branch_types', 'id', 'branch_type_id', null);
         });
     }
 
