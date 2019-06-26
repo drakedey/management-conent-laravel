@@ -47,3 +47,4 @@ Route::prefix('agreements')->group(function () {
 });
 
 Route::resource('divisions', 'DivisionController')->only(['index', 'show', 'store', 'update', 'destroy']);
+Route::resource('categories', 'CategoryController')->only(['index', 'show', 'store', 'update', 'destroy']);
