@@ -53,8 +53,9 @@ class Utils
         $table->foreign('country_id')->on('countries')->references('id');
     }
 
-    public static function getCustomTableRelation(Blueprint $table, string $tableRef, string $tableRefId,string $foreignId) {
-        $table->bigInteger($foreignId)->unsigned()->nullable(false);
+    public static function getCustomTableRelation(Blueprint $table, string $tableRef, string $tableRefId,string $foreignId, $optional) {
+        $nullable = isset($optional['nullable']) ? true : false;
+        $table->bigInteger($foreignId)->unsigned()->nullable($nullable);
         $table->foreign($foreignId)->on($tableRef)->references($tableRefId);
     }
 

@@ -19,9 +19,10 @@ class CreateImagesTable extends Migration
             $table->string('name');
             $table->string('type')->nullable(false);
             $table->string('url')->nullable(false);
-            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id');
-            Utils::getCustomTableRelation($table, 'branches', 'id', 'branch_id');
-            Utils::getCustomTableRelation($table, 'news', 'id', 'new_id');
+            $optional = array('nullable' => true);
+            Utils::getCustomTableRelation($table, 'products', 'id', 'product_id', $optional);
+            Utils::getCustomTableRelation($table, 'branches', 'id', 'branch_id', $optional);
+            Utils::getCustomTableRelation($table, 'news', 'id', 'new_id', $optional);
             $table->timestamps();
             $table->softDeletes();
         });
