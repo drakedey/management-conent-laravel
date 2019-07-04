@@ -25,11 +25,16 @@ class Language extends Model
     }
 
 
-    public function divisionContent() {
+    public function division() {
         return $this->hasOne('App\DivisionContent');
     }
 
-    public function tagContent() {
+    public function tag() {
         $this->hasOne('App\TagContent');
     }
+
+    public function category() {
+        $this->hasOne('App\CategoryLanguage');
+    }
+
 }

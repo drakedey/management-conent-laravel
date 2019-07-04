@@ -25,4 +25,8 @@ class Country extends Model
         return $this->belongsToMany('App\Division');
     }
 
+    public function categories() {
+        return $this->belongsToMany('App\Category', "category_country");
+    }
+
 }
